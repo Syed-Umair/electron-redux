@@ -1,5 +1,5 @@
 {
-  "name": "electron-redux",
+  "name": "@syed_umair/electron-redux",
   "version": "1.4.0",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
@@ -21,17 +21,16 @@
     "react",
     "desktop"
   ],
-  "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://www.burgiblog.com)",
+  "author": "Syed Umair <ideasyed@outlook.com> (https://syed-umair.github.io)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hardchor/electron-redux.git"
+    "url": "https://github.com/Syed-Umair/electron-redux.git"
   },
-  "homepage": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux",
-  "bugs": "https://github.com/hardchor/electron-redux/issues",
+  "homepage": "https://github.com/Syed-Umair/electron-redux/tree/master/packages/electron-redux",
+  "bugs": "https://github.com/Syed-Umair/electron-redux/issues",
   "license": "MIT",
   "dependencies": {
     "debug": "^3.0.0",
-    "flux-standard-action": "^2.0.0",
     "redux": "^4.0.1"
   },
   "peerDependencies": {

@@ -11,8 +11,9 @@ describe('replayActionMain', () => {
       subscribe: jest.fn(),
     };
     const payload = 123;
+    let callback = jest.fn();
 
-    replayActionMain(store);
+    replayActionMain(store, callback);
 
     expect(ipcMain.on).toHaveBeenCalledTimes(1);
     expect(ipcMain.on.mock.calls[0][0]).toBe('redux-action');
@@ -23,6 +24,9 @@ describe('replayActionMain', () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(payload);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(payload);
   });
 
   it('should return the current state from the global', () => {
@@ -33,16 +37,20 @@ describe('replayActionMain', () => {
       getState: jest.fn(),
       subscribe: jest.fn(),
     };
+    let callback = jest.fn();
 
     store.getState.mockReturnValueOnce(initialState);
     store.getState.mockReturnValueOnce(newState);
 
-    replayActionMain(store);
+    replayActionMain(store, callback);
 
     expect(global.getReduxState()).toEqual(JSON.stringify(initialState));
     expect(store.getState).toHaveBeenCalledTimes(1);
 
     expect(global.getReduxState()).toEqual(JSON.stringify(newState));
     expect(store.getState).toHaveBeenCalledTimes(2);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(payload);
   });
 });

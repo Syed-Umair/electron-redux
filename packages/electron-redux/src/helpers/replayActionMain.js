@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 
-export default function replayActionMain(store) {
+export default function replayActionMain(store, callback) {
   /**
    * Give renderers a way to sync the current state of the store, but be sure
    * we don't expose any remote objects. In other words, we need our state to
@@ -12,5 +12,6 @@ export default function replayActionMain(store) {
 
   ipcMain.on('redux-action', (event, payload) => {
     store.dispatch(payload);
+    callback(payload);
   });
 }
