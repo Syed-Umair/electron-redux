@@ -9,7 +9,7 @@ describe('replayActionRenderer', () => {
       dispatch: jest.fn(),
     };
     const payload = 123;
-    let callback = jest.fn();
+    const callback = jest.fn();
 
     replayActionRenderer(store, callback);
 

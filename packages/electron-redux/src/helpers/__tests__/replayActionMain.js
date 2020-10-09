@@ -11,7 +11,7 @@ describe('replayActionMain', () => {
       subscribe: jest.fn(),
     };
     const payload = 123;
-    let callback = jest.fn();
+    const callback = jest.fn();
 
     replayActionMain(store, callback);
 
@@ -37,7 +37,7 @@ describe('replayActionMain', () => {
       getState: jest.fn(),
       subscribe: jest.fn(),
     };
-    let callback = jest.fn();
+    const callback = jest.fn();
 
     store.getState.mockReturnValueOnce(initialState);
     store.getState.mockReturnValueOnce(newState);
@@ -50,7 +50,6 @@ describe('replayActionMain', () => {
     expect(global.getReduxState()).toEqual(JSON.stringify(newState));
     expect(store.getState).toHaveBeenCalledTimes(2);
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(payload);
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 });

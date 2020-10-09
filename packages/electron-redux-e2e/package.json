@@ -1,27 +1,29 @@
 {
   "name": "electron-redux-e2e",
-  "version": "1.4.0",
+  "version": "1.5.5",
   "description": "The end-to-end tests for electron-redux",
-  "main": "app/main.js",
-  "repository": "https://github.com/hardchor/electron-redux/tree/master/packages/electron-redux-e2e",
+  "main": "dist/main/main.js",
+  "repository": "https://github.com/klarna/electron-redux/tree/master/packages/electron-redux-e2e",
   "author": "Burkhard Reffeling <burkhard.reffeling@gmail.com> (http://burgiblog.com)",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "electron": "^1.7.9",
-    "electron-redux": "^1.4.0",
-    "redux": "^4.0.1"
+    "electron": "^9.2.0",
+    "electron-redux": "^1.5.4",
+    "electron-webpack": "^2.8.2",
+    "redux": "^4.0.1",
+    "source-map-support": "^0.5.19",
+    "webpack": "^4.43.0"
   },
   "scripts": {
     "start": "electron .",
-    "test": "jest .",
-    "snyk-protect": "snyk protect",
-    "prepublish": "yarn snyk-protect"
+    "start:webpack": "electron-webpack dev",
+    "build:webpack": "electron-webpack",
+    "test": "yarn build:webpack && jest ."
   },
   "devDependencies": {
-    "jest": "^21.2.1",
-    "snyk": "^1.189.0",
-    "spectron": "^3.7.2"
-  },
-  "snyk": true
+    "eslint": "^7.3.1",
+    "jest": "^26.0.0",
+    "spectron": "^11.1.0"
+  }
 }

@@ -15,5 +15,6 @@ describe('validateAction', () => {
     expect(validateAction({})).toBeFalsy();
     expect(validateAction({ meta: {} })).toBeFalsy();
     expect(validateAction(() => {})).toBeFalsy();
+    expect(validateAction([])).toBeFalsy();
   });
 });

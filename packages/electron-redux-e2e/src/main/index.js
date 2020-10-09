@@ -8,13 +8,15 @@ const {
   replayActionMain,
   createAliasedAction,
 } = require('electron-redux');
-const reducers = require('./reducers');
+const reducers = require('../reducers');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const store = createStore(reducers, 0, applyMiddleware(triggerAlias, forwardToRenderer));
 
 replayActionMain(store);
 
-// having to do this currently because of https://github.com/hardchor/electron-redux/issues/58
+// having to do this currently because of https://github.com/klarna/electron-redux/issues/58
 createAliasedAction('INCREMENT_ALIASED', () => ({ type: 'INCREMENT' }));
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -23,17 +25,29 @@ let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
+  if (isDevelopment) {
+    mainWindow.webContents.openDevTools();
+  }
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  if (isDevelopment) {
+    mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, '../renderer/index.html'),
+        protocol: 'file',
+        slashes: true,
+      }),
+    );
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -47,7 +61,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.whenReady().then(createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -59,9 +73,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
+  // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
-  }
+  if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
