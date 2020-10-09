@@ -9,8 +9,9 @@ describe('replayActionRenderer', () => {
       dispatch: jest.fn(),
     };
     const payload = 123;
+    const callback = jest.fn();
 
-    replayActionRenderer(store);
+    replayActionRenderer(store, callback);
 
     expect(ipcRenderer.on).toHaveBeenCalledTimes(1);
     expect(ipcRenderer.on.mock.calls[0][0]).toBe('redux-action');
@@ -21,5 +22,8 @@ describe('replayActionRenderer', () => {
 
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(payload);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(payload);
   });
 });

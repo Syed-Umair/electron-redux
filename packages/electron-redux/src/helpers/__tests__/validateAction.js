@@ -1,21 +1,17 @@
 import validateAction from '../validateAction';
 
 jest.unmock('../validateAction');
-jest.unmock('../fluxStandardAction');
 
 describe('validateAction', () => {
-  it('should accept FSA-compliant actions', () => {
+  it('should accept object with type property actions', () => {
     const action = {
       type: 'TEST',
-      payload: 123,
-      meta: {
-        foo: 'bar',
-      },
+      data: {},
     };
     expect(validateAction(action)).toBeTruthy();
   });
 
-  it('should reject non-FSA-compliant actions', () => {
+  it('should reject Objects without type property', () => {
     expect(validateAction({})).toBeFalsy();
     expect(validateAction({ meta: {} })).toBeFalsy();
     expect(validateAction(() => {})).toBeFalsy();
