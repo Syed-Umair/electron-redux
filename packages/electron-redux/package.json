@@ -1,6 +1,6 @@
 {
   "name": "@syed_umair/electron-redux",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Use redux in the main and browser process in electron",
   "main": "dist/index.js",
   "files": [
