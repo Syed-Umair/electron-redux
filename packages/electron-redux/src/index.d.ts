@@ -2,8 +2,8 @@
   export const forwardToRenderer: Middleware;
   export const forwardToMain: Middleware;
   export const triggerAlias: Middleware;
-  export function replayActionMain(store: Store): void;
-  export function replayActionRenderer(store: Store): void;
+  export function replayActionMain(store: Store, callback: Function): void;
+  export function replayActionRenderer(store: Store, callback: Function): void;
   export function getInitialStateRenderer<T>(): T;
   export type ForwardToMainParams = { blacklist?: RegExp[] };
   export function forwardToMainWithParams(
